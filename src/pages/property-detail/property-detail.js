@@ -1,7 +1,15 @@
 import { setPropertyValues } from "./property-detail.helpers";
 import { history } from "../../core/router";
-import {getPropertyDetails, getequipmentList } from "./property-detail.api";
-import { mapPropertyDetailFromApiToVm } from './property-detail.mapper';
+import {getPropertyDetails, getequipmentList,insertContact } from "./property-detail.api";
+import { mapPropertyDetailFromApiToVm, mapContactFromVmToApi } from './property-detail.mapper';
+import {
+  onSetError,
+  onSubmitForm,
+  onUpdateField,
+  onSetFormErrors,
+} from '../../common/helpers';
+import { formValidation } from "./property-detail.validatoin";
+
 
 /* let property = {
     id: "",
@@ -33,6 +41,45 @@ Promise.all([
 
 });
 
-let contac = {
-  
-}
+let contact = {
+  email: '',
+  message: '',
+};
+onUpdateField("email",(event) =>{
+  const value = event.target.value;
+    contact ={
+      ...contact,
+      email: value,
+    };
+    formValidation.validateField("email",contact.email)
+    .then((result) =>{
+      onSetError("email", result)
+    })
+});
+
+onUpdateField("message",(event) =>{
+  const value = event.target.value;
+  contact ={
+    ...contact,
+    message:value,
+  };
+  formValidation.validateField("message", contact.message)
+  .then((result) =>{
+    onSetError("message", result)
+  })
+});
+
+onSubmitForm('contact-button',() =>{
+  formValidation.validateForm(contact).then((result) =>{
+    onSetFormErrors(result);
+    const contactVmApi = mapContactFromVmToApi(contact);
+
+    if(result.succeeded){
+      insertContact(contactVmApi).then(() =>{
+        history.back()
+      })
+    };
+
+
+  })
+});

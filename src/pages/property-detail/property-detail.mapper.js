@@ -25,4 +25,13 @@ const getEquipments = (property, equipmentsList) =>{
 
     });
     return equipments;
+};
+
+export const mapContactFromVmToApi = (contact) =>{
+  return{
+    id: contact.id,
+    email: contact.email,
+    message: contact.message,
+
+  }
 }

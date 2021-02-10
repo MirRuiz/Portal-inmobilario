@@ -12,4 +12,11 @@ export const getPropertyDetails = (id) =>
  export const getequipmentList = () =>
  Axios.get(equipamentUrl).then((response) =>{
      return response.data;
+ });
+
+ const contactUrl = `${process.env.BASE_API_URL}/contact`;
+
+ export const insertContact =(contact) =>
+ Axios.post(contactUrl, contact).then((response) =>{
+     return response.data;
  })
