@@ -1,4 +1,4 @@
-export const mapPropertyDetailFromApiToVm = (property) => {
+export const mapPropertyDetailFromApiToVm = (property, equipmentList) => {
   return {
     id: property.id,
     mainImage: Array.isArray(property.images) ? property.images[0] : '',
@@ -10,12 +10,7 @@ export const mapPropertyDetailFromApiToVm = (property) => {
     bathrooms: `${property.bathrooms}${getBathroomsWord(property.bathrooms)}`,
     locationUrl: property.locationUrl,
     notes: property.notes,
-    equipments: property.equipments,
-    /* equipments: getEquipments(
-      property,
-      equipmentsList
-    ), */
-     /*  Array.isArray( property.equipamentId), *///hacer algo mas??
+    equipments: getEquipments(property, equipmentList),
     mainFeatures: property.mainFeatures,
     images: property.images,
   };
@@ -26,7 +21,7 @@ const getBathroomsWord = (bathrooms) => (bathrooms > 1 ? 'baños' : 'baño');
 
 const getEquipments = (property, equipmentsList) =>{
     const equipments = property.equipmentIds.map(elem =>{
-        return equipmentsList.filter(obj => obj.id ===elem).name
+        return equipmentsList.find(obj => obj.id ===elem).name
 
     });
     return equipments;
