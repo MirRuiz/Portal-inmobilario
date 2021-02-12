@@ -1,12 +1,12 @@
 export const mapPropertyDetailFromApiToVm = (property, equipmentList) => {
   return {
     id: property.id,
-    mainImage: Array.isArray(property.images) ? property.images[0] : '',
+    mainImage: Array.isArray(property.images) ? property.images[0] : [],
     title: property.title,
     city: property.city,
-    price: `${property.price}€`,
+    price: `${property.price} €`,
     rooms: `${property.rooms}${getRoomWord(property.rooms)}`,
-    squareMeter: `${property.squareMeter}m2`,
+    squareMeter: `${property.squareMeter} m2`,
     bathrooms: `${property.bathrooms}${getBathroomsWord(property.bathrooms)}`,
     locationUrl: property.locationUrl,
     notes: property.notes,
@@ -15,9 +15,9 @@ export const mapPropertyDetailFromApiToVm = (property, equipmentList) => {
     images: property.images,
   };
 };
-const getRoomWord = (rooms) => (rooms > 1 ? 'habitaciones' : 'habitación'); 
+const getRoomWord = (rooms) => (rooms > 1 ? ' habitaciones' : ' habitación'); 
 
-const getBathroomsWord = (bathrooms) => (bathrooms > 1 ? 'baños' : 'baño');
+const getBathroomsWord = (bathrooms) => (bathrooms > 1 ? ' baños' : ' baño');
 
 const getEquipments = (property, equipmentsList) =>{
     const equipments = property.equipmentIds.map(elem =>{

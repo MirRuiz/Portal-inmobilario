@@ -1,8 +1,8 @@
 import { Validators, createFormValidation } from '@lemoncode/fonk';
 import { positiveNumber } from '@lemoncode/fonk-positive-number-validator';
 import { minNumber } from '@lemoncode/fonk-min-number-validator';
- 
-const validatorSchema = {
+ import { isUrl } from '@lemoncode/fonk-is-url-validator';
+const validationSchema = {
   field: {
     title: [
       {
@@ -12,7 +12,7 @@ const validatorSchema = {
     ],
     notes: [
       {
-        validator: Validators.requiered,
+        validator: Validators.required,
         message: 'Campo requerido',
       },
     ],
@@ -22,13 +22,13 @@ const validatorSchema = {
         messge: 'El email introducido no es válido',
       },
       {
-        validator: Validators.requiered,
+        validator: Validators.required,
         message: 'Campo requerido',
       },
     ],
     phone: [
       {
-        validator: Validators.requiered,
+        validator: Validators.required,
         message: 'Campo requerido',
       },
       {
@@ -53,19 +53,19 @@ const validatorSchema = {
     ],
     address: [
       {
-        validator: Validators.requiered,
+        validator: Validators.required,
         message: 'Campo requerido',
       },
     ],
     city: [
       {
-        validator: Validators.requiered,
+        validator: Validators.required,
         message: 'Caampo requerido',
       },
     ],
     squareMeter: [
       {
-        validator: Validators.requiered,
+        validator: Validators.required,
         message: 'Campo requerido',
       },
       {
@@ -75,7 +75,7 @@ const validatorSchema = {
     ],
     bathrooms: [
       {
-        validator: Validators.requiered,
+        validator: Validators.required,
         message: 'Campo requerido',
       },
       {
@@ -85,7 +85,7 @@ const validatorSchema = {
     ],
     rooms: [
       {
-        validator: Validators.requiered,
+        validator: Validators.required,
         message: 'Campo requerido',
       },
       {
@@ -93,13 +93,25 @@ const validatorSchema = {
         message: 'Tiene que introducir un número',
       },
     ],
-    locationUrl:[
-        {
-            validator: Validators.requiered,
-            message: "Campo requerido",
-        },
+    locationUrl: [
+      {
+        validator: Validators.required,
+        message: 'Campo requerido',
+      },
+      {
+        validator: isUrl.validator,
+        message: "No es una url válida"
+      },
     ],
+    saleTypeId: [
+      {
+        validator: Validators.required,
+        message: 'Campo requerido',
+      },
+    ],
+    ProvinceId: Validators.required,
+    message: 'Campo requerido',
   },
 };
 
-export const formValidation = createFormValidation(validatorSchema);
+export const formValidation = createFormValidation(validationSchema);

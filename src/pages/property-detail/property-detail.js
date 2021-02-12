@@ -10,23 +10,6 @@ import {
 } from '../../common/helpers';
 import { formValidation } from "./property-detail.validatoin";
 
-
-/* let property = {
-    id: "",
-    mainImages: "",
-    title: "",
-    city: "",
-    price: "",
-    rooms:"",
-    squareMeter:"",
-    bathrooms: "",
-    locationUrl:"",
-    notes: "",
-    equipamentId: "",
-    mainFeatures: "",
-    images: "",
-
-}; */
 const params = history.getParams();
  
 Promise.all([                
