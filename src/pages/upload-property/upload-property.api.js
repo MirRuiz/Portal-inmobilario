@@ -21,6 +21,13 @@ Axios.get(provinceUrl).then((response) =>{
   return  response.data;
 });
 
+const propertyUrl = `${process.env.BASE_API_URL}/properties`;
+
+export const insertNewProperty = newProperty =>
+Axios.post(propertyUrl, newProperty).then((response) =>{
+  return response.data;
+})
+
 
 
 

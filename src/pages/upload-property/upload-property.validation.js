@@ -1,7 +1,7 @@
 import { Validators, createFormValidation } from '@lemoncode/fonk';
 import { positiveNumber } from '@lemoncode/fonk-positive-number-validator';
 import { minNumber } from '@lemoncode/fonk-min-number-validator';
- import { isUrl } from '@lemoncode/fonk-is-url-validator';
+import { isUrl } from '@lemoncode/fonk-is-url-validator';
 const validationSchema = {
   field: {
     title: [
@@ -36,10 +36,15 @@ const validationSchema = {
         message: 'Tiene que ser un número',
       },
       {
-        validator: minNumber.validator,
-        customArgs: { minValue: 9, inclusive: true },
-        message: 'No llega a la longitud establecida',
+        validator: Validators.maxLength,
+        customArgs: {length: 9},
+        message: "Máximo 9 dígitos",
       },
+      {
+        validator:Validators.minLength,
+        customArgs: {length: 9},
+        message: "Mínimo 9 dígitos"
+      }
     ],
     price: [
       {
@@ -100,7 +105,7 @@ const validationSchema = {
       },
       {
         validator: isUrl.validator,
-        message: "No es una url válida"
+        message: 'No es una url válida',
       },
     ],
     saleTypeId: [
@@ -109,8 +114,23 @@ const validationSchema = {
         message: 'Campo requerido',
       },
     ],
-    ProvinceId: Validators.required,
-    message: 'Campo requerido',
+    ProvinceId: [
+      {
+        validator: Validators.required,
+        message: 'Campo requerido',
+      },
+    ],
+    email:[
+      {
+        validator: Validators.email,
+        message: "Email no válido",
+      },
+      {
+        validator: Validators.required,
+        message: "Campo requerido"
+      }
+    ]
+
   },
 };
 

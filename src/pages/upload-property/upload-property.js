@@ -1,24 +1,38 @@
-import { onSetError, onUpdateField, onSubmitForm } from '../../common/helpers';
+import {
+  onSetError,
+  onUpdateField,
+  onSubmitForm,
+  onAddFile,
+  onSetFormErrors,
+} from '../../common/helpers';
 import { formValidation } from './upload-property.validation';
-import { getSaleType, getEquipment, getProvinces } from './upload-property.api';
+import {
+  getSaleType,
+  getEquipment,
+  getProvinces,
+  insertNewProperty,
+} from './upload-property.api';
 import {
   onAddFeature,
   onRemoveFeature,
   setCheckboxList,
   setOptionList,
   formatDeleteFeatureButtonId,
+  onAddImage,
 } from './upload-property.helpers';
-
+import { mapNewPropertyFromVmToApi } from './upload-property.mapper';
+import { history } from "../../core/router"
 let newProperty = {
+  id: '',
   title: '',
   notes: '',
   email: '',
   phone: '',
   price: '',
-  saleTypeId: [],
+  saleTypes: [],
   address: '',
   city: '',
-  ProvinceId: '',
+  province: '',
   squareMeter: '',
   bathrooms: '',
   rooms: '',
@@ -48,37 +62,50 @@ onUpdateField('equipments', (event) => {
     equipmentId: arrayEquipment,
   };
 });
- let arraySaleType = [];
- onUpdateField("saleTypes",(event) =>{
-   const value = event.target.value;
-   if(arraySaleType.includes(value)){
-     const elementToDelete = arraySaleType.indexOf(value);
-     arraySaleType.splice(elementToDelete, 1)
-   }else{
-     arraySaleType.push(value)
-   };
-   newProperty = {
-     ...newProperty,
-     saleTypeId: arraySaleType,
-   };
-   formValidation.validateField('saleTypes', newProperty.saleTypeId).then((result) =>{
-     onSetError("saleTypes", result)
-   });
- });
+let arraySaleType = [];
+onUpdateField('saleTypes', (event) => {
+  const value = event.target.value;
+  if (arraySaleType.includes(value)) {
+    const elementToDelete = arraySaleType.indexOf(value);
+    arraySaleType.splice(elementToDelete, 1);
+  } else {
+    arraySaleType.push(value);
+  }
+  newProperty = {
+    ...newProperty,
+    saleTypes: arraySaleType,
+  };
+  formValidation
+    .validateField('saleTypes', newProperty.saleTypes)
+    .then((result) => {
+      onSetError('saleTypes', result);
+    });
+});
 // let arrayFeatures = [];
-onSubmitForm("insert-feature-button",() =>{
+onSubmitForm('insert-feature-button', () => {
   const feature = document.getElementById('newFeature').value;
-  if(feature){
+  if (feature) {
     newProperty = {
       ...newProperty,
       mainFeatures: [...newProperty.mainFeatures, feature],
     };
-    onAddFeature(feature)
+    onAddFeature(feature);
   }
-  // onRemoveFeature(feature)
-  formatDeleteFeatureButtonId(feature)
+  const featureDeleteButton = formatDeleteFeatureButtonId(feature);
+  onSubmitForm(featureDeleteButton, () => {
+    onRemoveFeature(feature);
+  });
 });
 
+onAddFile('add-image', (image) => {
+  //la convierte en baswe 64
+  onAddImage(image);
+
+  return (newProperty = {
+    ...newProperty,
+    images: [...newProperty.images, image],
+  });
+});
 
 const getIdfromForm = (htmlId) => {
   onUpdateField(htmlId, (event) => {
@@ -107,7 +134,17 @@ getIdfromForm('rooms');
 getIdfromForm('locationUrl');
 getIdfromForm('province');
 
-
 onSubmitForm('save-button', () => {
-  console.log(newProperty);
+  formValidation.validateForm(newProperty).then((result) => {
+    console.log(newProperty)
+    onSetFormErrors(result)
+    // const fromVmToApi = mapNewPropertyFromVmToApi(newProperty);
+    /* if (result.succeeded) {
+      insertNewProperty(fromVmToApi).then(() => {
+        history.back();
+      });
+    } */
+    const fromVmToApi = mapNewPropertyFromVmToApi(newProperty);
+    insertNewProperty(fromVmToApi);
+  });
 });
