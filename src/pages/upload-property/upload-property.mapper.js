@@ -1,4 +1,4 @@
-import { parse } from 'qs';
+
 
 export const mapNewPropertyFromVmToApi = (newProperty) => {
   return {
@@ -8,10 +8,10 @@ export const mapNewPropertyFromVmToApi = (newProperty) => {
     email: newProperty.email,
     phone: newProperty.phone,
     price: parseInt(newProperty.price),
-    saleTypeIds: newProperty.saleTypes,
+    saleTypes: newProperty.saleTypes,
     address: newProperty.address,
     city: newProperty.city,
-    provinceId: newProperty.province,
+    province: newProperty.province,
     squareMeter: parseInt(newProperty.squareMeter),
     rooms: parseInt(newProperty.rooms),
     bathrooms: parseInt(newProperty.bathrooms),

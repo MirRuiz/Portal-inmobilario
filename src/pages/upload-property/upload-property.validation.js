@@ -37,14 +37,14 @@ const validationSchema = {
       },
       {
         validator: Validators.maxLength,
-        customArgs: {length: 9},
-        message: "Máximo 9 dígitos",
+        customArgs: { length: 9 },
+        message: 'Máximo 9 dígitos',
       },
       {
-        validator:Validators.minLength,
-        customArgs: {length: 9},
-        message: "Mínimo 9 dígitos"
-      }
+        validator: Validators.minLength,
+        customArgs: { length: 9 },
+        message: 'Mínimo 9 dígitos',
+      },
     ],
     price: [
       {
@@ -108,29 +108,28 @@ const validationSchema = {
         message: 'No es una url válida',
       },
     ],
-    saleTypeId: [
+    saleTypes: [
       {
         validator: Validators.required,
         message: 'Campo requerido',
       },
     ],
-    ProvinceId: [
+    province: [
       {
         validator: Validators.required,
         message: 'Campo requerido',
       },
     ],
-    email:[
+    email: [
       {
         validator: Validators.email,
-        message: "Email no válido",
+        message: 'Email no válido',
       },
       {
         validator: Validators.required,
-        message: "Campo requerido"
-      }
-    ]
-
+        message: 'Campo requerido',
+      },
+    ],
   },
 };
 

@@ -21,7 +21,7 @@ import {
   onAddImage,
 } from './upload-property.helpers';
 import { mapNewPropertyFromVmToApi } from './upload-property.mapper';
-import { history } from "../../core/router"
+import { history } from '../../core/router';
 let newProperty = {
   id: '',
   title: '',
@@ -132,19 +132,18 @@ getIdfromForm('squareMeter');
 getIdfromForm('bathrooms');
 getIdfromForm('rooms');
 getIdfromForm('locationUrl');
-getIdfromForm('province');
+// getIdfromForm('provinceId');
 
 onSubmitForm('save-button', () => {
   formValidation.validateForm(newProperty).then((result) => {
-    console.log(newProperty)
-    onSetFormErrors(result)
-    // const fromVmToApi = mapNewPropertyFromVmToApi(newProperty);
-    /* if (result.succeeded) {
+    onSetFormErrors(result);
+    
+    const fromVmToApi = mapNewPropertyFromVmToApi(newProperty);
+     if (result.succeeded) {
       insertNewProperty(fromVmToApi).then(() => {
         history.back();
       });
-    } */
-    const fromVmToApi = mapNewPropertyFromVmToApi(newProperty);
-    insertNewProperty(fromVmToApi);
+    }
+    
   });
 });
